@@ -1,5 +1,6 @@
     import React, {Component} from 'react';
     import Movie from './Movie'
+    import axios from 'axios'
 
     class MovieApp extends Component{
         constructor(){
@@ -26,6 +27,14 @@
             console.log("user submitted form.")
             const movieTitle = document.querySelector("#search-terms").value
             console.log(movieTitle)
+            const searchURL = `http://api.themoviedb.org/3/search/movie?query=${movieTitle}&api_key=fec8b5ab27b292a68294261bb21b04a5`
+            const movieData = axios.get(searchURL);
+            movieData.then((resp)=>{
+                console.log(resp.data)
+                this.setState({
+                    movieData: resp.data.results
+                })
+            })
         }
 
 
@@ -36,12 +45,11 @@
                 // console.log(">>>>>>>", movie)
                 // console.log("<<<<<<", movie.poster_path)
                 // console.log(this.state.movieData[0].id)
+                // console.log(movies[0].id)
                 return(
                     <Movie movie={movie} key={i}/>
                 )
             })
-                // console.log("lll", movies)
-                // console.log(movies[0])
             return(
                 <div className="container">
                     <div className="row">
